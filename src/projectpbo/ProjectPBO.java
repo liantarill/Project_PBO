@@ -4,6 +4,7 @@
  */
 package projectpbo;
 
+import java.util.Random;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
  * @author LENOVO
  */
 public class ProjectPBO extends Application {
+    
+    private static final Random random = new Random();
     
     @Override
     public void start(Stage stage) throws Exception {
