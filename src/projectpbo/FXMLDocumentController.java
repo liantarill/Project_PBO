@@ -10,25 +10,55 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
  * @author LENOVO
  */
 public class FXMLDocumentController implements Initializable {
-    
+
     @FXML
-    private Label label;
-    
+    private AnchorPane scene;
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private ImageView Hero;
     
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        scene.setOnKeyPressed(this::Movement);
+        
+        scene.requestFocus();
+        scene.setOnMouseClicked(event -> scene.requestFocus());
     }    
+
+    @FXML
+    private void Movement(KeyEvent event) {
+         switch(event.getCode()){
+            case UP:
+                if(Hero.getLayoutY() > 0){
+                    Hero.setLayoutY(Hero.getLayoutY()-10);
+                }
+                break;
+            case DOWN:
+                if(Hero.getLayoutY() < 511){
+                    Hero.setLayoutY(Hero.getLayoutY()+10);
+                }
+                break;
+            case RIGHT:
+                if(Hero.getLayoutX() < 700){
+                    Hero.setLayoutX(Hero.getLayoutX()+10);
+                }
+                break;
+            case LEFT:
+                if(Hero.getLayoutX() > 0){
+                    Hero.setLayoutX(Hero.getLayoutX()-10);
+                }
+                break;
+        }
+    }
     
 }

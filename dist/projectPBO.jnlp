@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="projectPBO.jar" size="2625" download="eager" />
+    <jar href="projectPBO.jar" size="4179" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="projectpbo.ProjectPBO"  name="projectPBO" />
   <update check="always"/>
