@@ -10,13 +10,43 @@
          <children>
             <ImageView fitHeight="800.0" fitWidth="600.0" layoutX="100.0" layoutY="-99.79999999999995" pickOnBounds="true" style="-fx-rotate: 90;" AnchorPane.bottomAnchor="-100.20000000000005">
                <image>
-                  <Image url="file:/D:/Tugas/PBO/projectPBO/img/bg.jpg" />
+                  <Image url="@img/bg.jpg" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="222.0" layoutY="111.0" prefHeight="128.0" prefWidth="135.0" />
+            <AnchorPane layoutX="14.0" layoutY="325.0" prefHeight="128.0" prefWidth="135.0" />
+            <ImageView fx:id="enemy6" fitHeight="109.0" fitWidth="142.0" layoutX="-2.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/enemy6.png" />
+               </image>
+            </ImageView>
             <ImageView fx:id="Hero" fitHeight="109.0" fitWidth="183.0" layoutX="346.0" layoutY="511.0" onKeyPressed="#Movement" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/D:/Tugas/PBO/projectPBO/img/ship.png" />
+                  <Image url="@img/ship.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="enemy2" fitHeight="81.0" fitWidth="65.0" layoutX="227.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/enemy2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="enemy5" fitHeight="78.0" fitWidth="102.0" layoutX="209.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/enemy5.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="enemy4" fitHeight="109.0" fitWidth="77.0" layoutX="132.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/enemy4.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="enemy3" fitHeight="81.0" fitWidth="116.0" layoutX="14.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/enemy3.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="enemy1" fitHeight="71.0" fitWidth="65.0" layoutX="138.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/enemy1.png" />
                </image>
             </ImageView>
          </children>
