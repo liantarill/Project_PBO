@@ -34,7 +34,7 @@ public class FXMLDocumentController implements Initializable {
         scene.requestFocus();
         scene.setOnMouseClicked(event -> scene.requestFocus());
     }    
-
+//contoh
     @FXML
     private void Movement(KeyEvent event) {
          switch(event.getCode()){

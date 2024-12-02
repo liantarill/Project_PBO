@@ -14,7 +14,7 @@
                </image>
             </ImageView>
             <AnchorPane layoutX="222.0" layoutY="111.0" prefHeight="128.0" prefWidth="135.0" />
-            <ImageView fx:id="Hero" fitHeight="109.0" fitWidth="183.0" layoutX="347.0" layoutY="501.0" onKeyPressed="#Movement" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Hero" fitHeight="109.0" fitWidth="183.0" layoutX="346.0" layoutY="511.0" onKeyPressed="#Movement" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:/D:/Tugas/PBO/projectPBO/img/ship.png" />
                </image>
