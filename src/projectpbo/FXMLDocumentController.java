@@ -49,37 +49,39 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void Movement(KeyEvent event) {
         switch (event.getCode()) {
-            case UP:
+            case W:
                 if (Hero.getLayoutY() > 0) {
                     Hero.setLayoutY(Hero.getLayoutY() - 10);
                 }
                 break;
-            case DOWN:
+            case S:
                 if (Hero.getLayoutY() < scene.getHeight() - Hero.getFitHeight()) {
                     Hero.setLayoutY(Hero.getLayoutY() + 10);
                 }
                 break;
-            case RIGHT:
+            case D:
                 if (Hero.getLayoutX() < scene.getWidth() - Hero.getFitWidth()) {
                     Hero.setLayoutX(Hero.getLayoutX() + 10);
                 }
                 break;
-            case LEFT:
+            case A:
                 if (Hero.getLayoutX() > 0) {
                     Hero.setLayoutX(Hero.getLayoutX() - 10);
                 }
                 break;
+            case SPACE:
+                fireBulletWithDelay();
+            break;
         }
     }
 
     private void startEnemySpawner() {
-        Timeline spawner = new Timeline(new KeyFrame(Duration.seconds(2), event -> spawnEnemy()));
+        Timeline spawner = new Timeline(new KeyFrame(Duration.seconds(1), event -> spawnEnemy()));
         spawner.setCycleCount(Timeline.INDEFINITE);
         spawner.play();
     }
 
     private void spawnEnemy() {
-        // Paths to enemy images
         String[] enemyImages = {
         getClass().getResource("img/enemy1.png").toExternalForm(),
         getClass().getResource("img/enemy2.png").toExternalForm(),
@@ -93,7 +95,7 @@ public class FXMLDocumentController implements Initializable {
         int randomIndex = random.nextInt(enemyImages.length);
         String selectedImagePath = enemyImages[randomIndex];
 
-        double randomX = random.nextDouble() * (scene.getWidth() - 50); // Adjust for enemy size
+        double randomX = random.nextDouble() * (scene.getWidth() - 50); 
         double startY = -50; 
 
         ImageView enemy = new ImageView(new Image(selectedImagePath));
@@ -123,5 +125,52 @@ public class FXMLDocumentController implements Initializable {
         };
 
         timer.start(); 
+    }
+    
+    private void fireBullet() {
+        ImageView bullet = new ImageView(new Image(getClass().getResource("img/bullet1.png").toExternalForm()));
+        bullet.setFitWidth(10); 
+        bullet.setFitHeight(20);
+
+        bullet.setLayoutX(Hero.getLayoutX() + Hero.getFitWidth() / 2 - bullet.getFitWidth() / 2); // pas di tengah
+        bullet.setLayoutY(Hero.getLayoutY() - bullet.getFitHeight()); // untuk di atas hero
+
+        scene.getChildren().add(bullet);
+
+        animateBullet(bullet);
+    }
+    
+    private boolean canShoot = true; //tambah delay
+    private final long shootDelay = 200; 
+    
+    private void fireBulletWithDelay() {
+        if (!canShoot) return; 
+
+        fireBullet();
+        canShoot = false;
+
+        Timeline delay = new Timeline(new KeyFrame(Duration.millis(shootDelay), e -> canShoot = true));
+        delay.setCycleCount(1);
+        delay.play();
+    }
+
+
+    private void animateBullet(ImageView bullet) {
+        double speed = 5.0; 
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                bullet.setLayoutY(bullet.getLayoutY() - speed);
+
+                //hapus bullet saat hilang
+                if (bullet.getLayoutY() < -bullet.getFitHeight()) {
+                    scene.getChildren().remove(bullet);
+                    stop(); 
+                }
+            }
+        };
+
+        timer.start(); // Start the animation
     }
 }
