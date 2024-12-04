@@ -84,12 +84,12 @@ public class FXMLDocumentController implements Initializable {
 
     private void spawnEnemy() {
         String[] enemyImages = {
-                getClass().getResource("img/enemy1.png").toExternalForm(),
-                getClass().getResource("img/enemy2.png").toExternalForm(),
-                getClass().getResource("img/enemy3.png").toExternalForm(),
-                getClass().getResource("img/enemy4.png").toExternalForm(),
-                getClass().getResource("img/enemy5.png").toExternalForm(),
-                getClass().getResource("img/enemy6.png").toExternalForm()
+                getClass().getResource("img/enemy/enemy1.png").toExternalForm(),
+                getClass().getResource("img/enemy/enemy2.png").toExternalForm(),
+                getClass().getResource("img/enemy/enemy3.png").toExternalForm(),
+                getClass().getResource("img/enemy/enemy4.png").toExternalForm(),
+                getClass().getResource("img/enemy/enemy5.png").toExternalForm(),
+                getClass().getResource("img/enemy/enemy6.png").toExternalForm()
         };
 
         int randomIndex = random.nextInt(enemyImages.length);
@@ -194,16 +194,51 @@ public class FXMLDocumentController implements Initializable {
                 ImageView enemy = enemyIterator.next();
 
                 if (bullet.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+                    createExplosionEffect(enemy.getLayoutX(), enemy.getLayoutY());
+
                     scene.getChildren().remove(bullet);
                     scene.getChildren().remove(enemy);
 
                     bulletIterator.remove();
                     enemyIterator.remove();
 
-                    // nanti ditampah score sama effect
                     return;
                 }
             }
         }
     }
+
+    private void createExplosionEffect(double x, double y) {
+        ImageView explosion = new ImageView();
+        explosion.setFitWidth(50);
+        explosion.setFitHeight(50);
+        explosion.setLayoutX(x);
+        explosion.setLayoutY(y);
+
+        scene.getChildren().add(explosion);
+
+        String[] explosionFrames = {
+                getClass().getResource("img/explosion/explosion1.png").toExternalForm(),
+                getClass().getResource("img/explosion/explosion2.png").toExternalForm(),
+                getClass().getResource("img/explosion/explosion3.png").toExternalForm(),
+                getClass().getResource("img/explosion/explosion4.png").toExternalForm(),
+                getClass().getResource("img/explosion/explosion5.png").toExternalForm(),
+                getClass().getResource("img/explosion/explosion6.png").toExternalForm(),
+                getClass().getResource("img/explosion/explosion7.png").toExternalForm()
+        };
+
+        Timeline explosionAnimation = new Timeline();
+        for (int i = 0; i < explosionFrames.length; i++) {
+            final int frameIndex = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(100 * i), event -> {
+                explosion.setImage(new Image(explosionFrames[frameIndex]));
+            });
+            explosionAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        explosionAnimation.setOnFinished(event -> scene.getChildren().remove(explosion));
+
+        explosionAnimation.play();
+    }
+
 }
