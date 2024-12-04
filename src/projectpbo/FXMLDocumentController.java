@@ -5,16 +5,16 @@
 package projectpbo;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -28,18 +28,19 @@ import javafx.util.Duration;
 public class FXMLDocumentController implements Initializable {
 
     @FXML
-    private AnchorPane scene; 
-    
+    private AnchorPane scene;
+
     @FXML
-    private ImageView Hero; 
+    private ImageView Hero;
 
     private final Random random = new Random();
+    private final List<ImageView> bullets = new ArrayList<>();
+    private final List<ImageView> enemies = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         scene.setOnKeyPressed(this::Movement);
-        
+
         scene.requestFocus();
         scene.setOnMouseClicked(event -> scene.requestFocus());
 
@@ -71,7 +72,7 @@ public class FXMLDocumentController implements Initializable {
                 break;
             case SPACE:
                 fireBulletWithDelay();
-            break;
+                break;
         }
     }
 
@@ -83,68 +84,74 @@ public class FXMLDocumentController implements Initializable {
 
     private void spawnEnemy() {
         String[] enemyImages = {
-        getClass().getResource("img/enemy1.png").toExternalForm(),
-        getClass().getResource("img/enemy2.png").toExternalForm(),
-        getClass().getResource("img/enemy3.png").toExternalForm(),
-        getClass().getResource("img/enemy4.png").toExternalForm(),
-        getClass().getResource("img/enemy5.png").toExternalForm(),
-        getClass().getResource("img/enemy6.png").toExternalForm()
+                getClass().getResource("img/enemy1.png").toExternalForm(),
+                getClass().getResource("img/enemy2.png").toExternalForm(),
+                getClass().getResource("img/enemy3.png").toExternalForm(),
+                getClass().getResource("img/enemy4.png").toExternalForm(),
+                getClass().getResource("img/enemy5.png").toExternalForm(),
+                getClass().getResource("img/enemy6.png").toExternalForm()
         };
-
 
         int randomIndex = random.nextInt(enemyImages.length);
         String selectedImagePath = enemyImages[randomIndex];
 
-        double randomX = random.nextDouble() * (scene.getWidth() - 50); 
-        double startY = -50; 
+        double randomX = random.nextDouble() * (scene.getWidth() - 50);
+        double startY = -50;
 
         ImageView enemy = new ImageView(new Image(selectedImagePath));
-        enemy.setFitWidth(50); 
-        enemy.setFitHeight(50); 
+        enemy.setFitWidth(50);
+        enemy.setFitHeight(50);
         enemy.setLayoutX(randomX);
         enemy.setLayoutY(startY);
 
         scene.getChildren().add(enemy);
+        enemies.add(enemy);
 
         createEnemyMovement(enemy);
     }
 
     private void createEnemyMovement(ImageView enemy) {
-        double speed = 2.0; 
+        double speed = 2.0;
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 enemy.setLayoutY(enemy.getLayoutY() + speed);
 
+                // Check for collisions
+                checkBulletCollision();
+
                 if (enemy.getLayoutY() > scene.getHeight()) {
                     scene.getChildren().remove(enemy);
+                    enemies.remove(enemy);
                     stop();
                 }
             }
         };
 
-        timer.start(); 
+        timer.start();
     }
-    
+
     private void fireBullet() {
         ImageView bullet = new ImageView(new Image(getClass().getResource("img/bullet1.png").toExternalForm()));
-        bullet.setFitWidth(10); 
+        bullet.setFitWidth(10);
         bullet.setFitHeight(20);
 
         bullet.setLayoutX(Hero.getLayoutX() + Hero.getFitWidth() / 2 - bullet.getFitWidth() / 2); // pas di tengah
         bullet.setLayoutY(Hero.getLayoutY() - bullet.getFitHeight()); // untuk di atas hero
 
         scene.getChildren().add(bullet);
+        bullets.add(bullet);
 
         animateBullet(bullet);
     }
-    
-    private boolean canShoot = true; //tambah delay
-    private final long shootDelay = 200; 
-    
+
+    private boolean canShoot = true;
+    private final long shootDelay = 200;
+
     private void fireBulletWithDelay() {
-        if (!canShoot) return; 
+        if (!canShoot)
+            return;
 
         fireBullet();
         canShoot = false;
@@ -154,23 +161,49 @@ public class FXMLDocumentController implements Initializable {
         delay.play();
     }
 
-
     private void animateBullet(ImageView bullet) {
-        double speed = 5.0; 
+        double speed = 5.0;
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 bullet.setLayoutY(bullet.getLayoutY() - speed);
 
-                //hapus bullet saat hilang
+                // Check for collisions
+                checkBulletCollision();
+
                 if (bullet.getLayoutY() < -bullet.getFitHeight()) {
                     scene.getChildren().remove(bullet);
-                    stop(); 
+                    bullets.remove(bullet);
+                    stop();
                 }
             }
         };
 
-        timer.start(); // Start the animation
+        timer.start();
+    }
+
+    private void checkBulletCollision() {
+        Iterator<ImageView> bulletIterator = bullets.iterator();
+
+        while (bulletIterator.hasNext()) {
+            ImageView bullet = bulletIterator.next();
+
+            Iterator<ImageView> enemyIterator = enemies.iterator();
+            while (enemyIterator.hasNext()) {
+                ImageView enemy = enemyIterator.next();
+
+                if (bullet.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+                    scene.getChildren().remove(bullet);
+                    scene.getChildren().remove(enemy);
+
+                    bulletIterator.remove();
+                    enemyIterator.remove();
+
+                    // nanti ditampah score sama effect
+                    return;
+                }
+            }
+        }
     }
 }
