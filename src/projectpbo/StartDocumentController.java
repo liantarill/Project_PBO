@@ -69,15 +69,6 @@ public class StartDocumentController implements Initializable {
 
     }
 
-    // public void animation() {
-    // TranslateTransition tt = new TranslateTransition();
-
-    // tt.setNode(enemy3);
-    // tt.setDuration(Duration.seconds(1));
-
-    // tt.setByY(800);
-    // tt.play();
-    // }
     private void startEnemySpawner() {
         Timeline spawner = new Timeline(new KeyFrame(Duration.seconds(1), event -> spawnEnemy()));
         spawner.setCycleCount(Timeline.INDEFINITE);

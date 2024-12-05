@@ -29,10 +29,20 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private AnchorPane scene;
-
     @FXML
     private ImageView Hero;
+    @FXML
+    private ImageView health1;
+    @FXML
+    private ImageView health4;
+    @FXML
+    private ImageView health3;
+    @FXML
+    private ImageView health2;
+    @FXML
+    private ImageView health5;
 
+    private int health = 5; // Hero's initial health
     private final Random random = new Random();
     private final List<ImageView> bullets = new ArrayList<>();
     private final List<ImageView> enemies = new ArrayList<>();
@@ -115,8 +125,17 @@ public class FXMLDocumentController implements Initializable {
             public void handle(long now) {
                 enemy.setLayoutY(enemy.getLayoutY() + speed);
 
-                // Check for collisions
                 checkBulletCollision();
+
+                if (enemies.contains(enemy) && enemy.getBoundsInParent().intersects(Hero.getBoundsInParent())) {
+                    // scene.getChildren().remove(enemy);
+                    enemies.remove(enemy); // dihapus dari list tapi gambar tetap ada
+
+                    triggerHeroBeepEffect();
+                    handleHeroDamage();
+                    // stop();
+                    return;
+                }
 
                 if (enemy.getLayoutY() > scene.getHeight()) {
                     scene.getChildren().remove(enemy);
@@ -127,6 +146,14 @@ public class FXMLDocumentController implements Initializable {
         };
 
         timer.start();
+    }
+
+    private void triggerHeroBeepEffect() {
+        Timeline flash = new Timeline(
+                new KeyFrame(Duration.millis(100), event -> Hero.setOpacity(0)),
+                new KeyFrame(Duration.millis(200), event -> Hero.setOpacity(1.0)));
+        flash.setCycleCount(7);
+        flash.play();
     }
 
     private void fireBullet() {
@@ -166,7 +193,6 @@ public class FXMLDocumentController implements Initializable {
             public void handle(long now) {
                 bullet.setLayoutY(bullet.getLayoutY() - speed);
 
-                // Check for collisions
                 checkBulletCollision();
 
                 if (bullet.getLayoutY() < -bullet.getFitHeight()) {
@@ -236,6 +262,27 @@ public class FXMLDocumentController implements Initializable {
         explosionAnimation.setOnFinished(event -> scene.getChildren().remove(explosion));
 
         explosionAnimation.play();
+    }
+
+    private void updateHealthUI() {
+        ImageView[] healthBars = { health1, health2, health3, health4, health5 };
+        for (int i = 0; i < healthBars.length; i++) {
+            healthBars[i].setVisible(i < health);
+        }
+    }
+
+    private void handleHeroDamage() {
+        health--;
+        updateHealthUI();
+
+        if (health <= 0) {
+            gameOver();
+        }
+    }
+
+    private void gameOver() {
+        System.out.println("Game Over!");
+        enemies.clear();
     }
 
 }
