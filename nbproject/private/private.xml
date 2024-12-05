@@ -4,9 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Tugas/PBO/projectPBO/src/projectpbo/StartDocumentController.java</file>
+            <file>file:/D:/Tugas/PBO/projectPBO/src/projectpbo/GameOverPageController.java</file>
             <file>file:/D:/Tugas/PBO/projectPBO/src/projectpbo/FXMLDocumentController.java</file>
             <file>file:/D:/Tugas/PBO/projectPBO/src/projectpbo/startDocument.fxml</file>
             <file>file:/D:/Tugas/PBO/projectPBO/src/projectpbo/ProjectPBO.java</file>
+            <file>file:/D:/Tugas/PBO/projectPBO/src/projectpbo/gameOverPage.fxml</file>
         </group>
     </open-files>
 </project-private>

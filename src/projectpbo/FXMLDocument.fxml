@@ -3,12 +3,15 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="scene" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectpbo.FXMLDocumentController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="800.0" fitWidth="600.0" layoutX="100.0" layoutY="-99.79999999999995" pickOnBounds="true" style="-fx-rotate: 90;" AnchorPane.bottomAnchor="-100.20000000000005">
+            <ImageView fitHeight="800.0" fitWidth="600.0" layoutX="100.0" layoutY="-100.0" pickOnBounds="true" style="-fx-rotate: 90;" AnchorPane.bottomAnchor="-100.0">
                <image>
                   <Image url="@img/bg.jpg" />
                </image>
@@ -47,6 +50,17 @@
                   </ImageView>
                </children>
             </AnchorPane>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0f3ff33" height="25.0" layoutX="672.0" layoutY="535.0" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+            <Text fx:id="point" fill="WHITE" layoutX="700.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" style="\\: \\;" text="0" textAlignment="RIGHT" wrappingWidth="85.9998779296875">
+               <font>
+                  <Font name="Agency FB Bold" size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="point1" fill="WHITE" layoutX="675.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" style="\\: \\;" text="SCORE:" wrappingWidth="50.7998046875">
+               <font>
+                  <Font name="Agency FB Bold" size="20.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>

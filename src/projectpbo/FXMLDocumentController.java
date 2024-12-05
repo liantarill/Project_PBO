@@ -14,11 +14,16 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -41,14 +46,18 @@ public class FXMLDocumentController implements Initializable {
     private ImageView health2;
     @FXML
     private ImageView health5;
+    @FXML
+    private Text point;
 
-    private int health = 5; // Hero's initial health
+    private int health = 5;
+    private int score = 0;
     private final Random random = new Random();
     private final List<ImageView> bullets = new ArrayList<>();
     private final List<ImageView> enemies = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         scene.setOnKeyPressed(this::Movement);
 
         startEnemySpawner();
@@ -137,7 +146,9 @@ public class FXMLDocumentController implements Initializable {
                     return;
                 }
 
-                if (enemy.getLayoutY() > scene.getHeight()) {
+                if (enemies.contains(enemy) && enemy.getLayoutY() > scene.getHeight()) {
+                    score -= 10;
+                    updateScore();
                     scene.getChildren().remove(enemy);
                     enemies.remove(enemy);
                     stop();
@@ -225,10 +236,16 @@ public class FXMLDocumentController implements Initializable {
                     bulletIterator.remove();
                     enemyIterator.remove();
 
+                    score += 10;
+                    updateScore();
                     return;
                 }
             }
         }
+    }
+
+    private void updateScore() {
+        point.setText("" + score);
     }
 
     private void createExplosionEffect(double x, double y) {
@@ -276,12 +293,28 @@ public class FXMLDocumentController implements Initializable {
         updateHealthUI();
 
         if (health <= 0) {
-            gameOver();
+            try {
+                gameOver();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void gameOver() {
-        System.out.println("Game Over!");
+    private void gameOver() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gameOverPage.fxml"));
+        Parent root = loader.load();
+
+        GameOverPageController controller = loader.getController();
+        controller.setScore(score); // Kirim skor ke halaman Game Over
+
+        Stage stage = (Stage) scene.getScene().getWindow();
+        Scene newScene = new Scene(root);
+
+        stage.setScene(newScene);
+        stage.show();
+
+        root.requestFocus();
         enemies.clear();
     }
 
