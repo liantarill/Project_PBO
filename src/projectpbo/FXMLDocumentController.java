@@ -41,9 +41,6 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         scene.setOnKeyPressed(this::Movement);
 
-        scene.requestFocus();
-        scene.setOnMouseClicked(event -> scene.requestFocus());
-
         startEnemySpawner();
     }
 
