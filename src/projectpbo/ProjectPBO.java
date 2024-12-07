@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class ProjectPBO extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("startDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("startPage.fxml"));
 
         Scene scene = new Scene(root);
 

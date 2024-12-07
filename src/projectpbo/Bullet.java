@@ -24,12 +24,12 @@ public class Bullet {
     private final List<ImageView> bullets = new ArrayList<>();
     private final ImageView Hero;
     private final AnchorPane scene;
-    private final FXMLDocumentController controller;
+    private final MainPageController controller;
 
     private boolean canShoot = true;
     private final long shootDelay = 200;
 
-    public Bullet(ImageView Hero, AnchorPane scene, FXMLDocumentController controller) {
+    public Bullet(ImageView Hero, AnchorPane scene, MainPageController controller) {
         this.Hero = Hero;
         this.scene = scene;
         this.controller = controller;
@@ -97,7 +97,7 @@ public class Bullet {
                     bulletIterator.remove();
                     enemyIterator.remove();
 
-                    FXMLDocumentController.score += 10;
+                    MainPageController.score += 10;
                     controller.updateScore();
                     return;
                 }

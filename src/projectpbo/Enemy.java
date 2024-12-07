@@ -24,10 +24,10 @@ public class Enemy {
     private final AnchorPane scene;
     private final ImageView Hero;
     public final List<ImageView> enemies = new ArrayList<>();
-    private final FXMLDocumentController controller;
+    private final MainPageController controller;
     private final Random random = new Random();
 
-    public Enemy(AnchorPane scene, ImageView Hero, FXMLDocumentController controller) {
+    public Enemy(AnchorPane scene, ImageView Hero, MainPageController controller) {
         this.scene = scene;
         this.Hero = Hero;
         this.controller = controller;
@@ -75,7 +75,7 @@ public class Enemy {
                     enemies.remove(enemy);
                     controller.hero.triggerHeroBeepEffect();
                     controller.hero.handleHeroDamage();
-                    FXMLDocumentController.score -= 10;
+                    MainPageController.score -= 10;
                     controller.updateScore();
                     // stop();
                     return;
@@ -84,7 +84,7 @@ public class Enemy {
                 if (enemies.contains(enemy) && enemy.getLayoutY() > scene.getHeight()) {
                     scene.getChildren().remove(enemy);
                     enemies.remove(enemy);
-                    FXMLDocumentController.score -= 10;
+                    MainPageController.score -= 10;
                     controller.updateScore();
                     stop();
                 }

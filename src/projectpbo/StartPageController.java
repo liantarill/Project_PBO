@@ -29,7 +29,7 @@ import javafx.util.Duration;
  *
  * @author LENOVO
  */
-public class StartDocumentController implements Initializable {
+public class StartPageController implements Initializable {
 
     @FXML
     private ImageView startBtn;
@@ -47,16 +47,15 @@ public class StartDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        // animation();
         startEnemySpawner();
 
     }
 
     @FXML
     private void startGame(MouseEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
         Stage stage = (Stage) startBtn.getScene().getWindow();
-
+        stage.close();
         Scene newScene = new Scene(root);
 
         stage.setScene(newScene);

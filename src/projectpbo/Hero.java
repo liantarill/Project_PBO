@@ -19,11 +19,11 @@ public class Hero implements IHero {
     AnchorPane scene;
     ImageView Hero;
 
-    FXMLDocumentController controller;
+    MainPageController controller;
 
     public int health = 5;
 
-    public Hero(AnchorPane scene, ImageView Hero, FXMLDocumentController controller) {
+    public Hero(AnchorPane scene, ImageView Hero, MainPageController controller) {
         this.scene = scene;
         this.Hero = Hero;
         this.controller = controller;

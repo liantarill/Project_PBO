@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author LENOVO
  */
-public class FXMLDocumentController implements Initializable {
+public class MainPageController implements Initializable {
 
     @FXML
     private AnchorPane scene;
@@ -56,6 +56,7 @@ public class FXMLDocumentController implements Initializable {
 
         scene.setOnKeyPressed(this::Movement);
         enemy.startEnemySpawner();
+
     }
 
     @FXML

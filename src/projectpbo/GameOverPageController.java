@@ -40,9 +40,9 @@ public class GameOverPageController implements Initializable {
 
     @FXML
     private void backToGame(MouseEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
         Stage stage = (Stage) scored.getScene().getWindow();
-        stage.close();
+        // stage.close();
 
         Scene newScene = new Scene(root);
 
