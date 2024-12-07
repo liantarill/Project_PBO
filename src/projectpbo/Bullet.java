@@ -25,6 +25,7 @@ public class Bullet {
     private final ImageView Hero;
     private final AnchorPane scene;
     private final MainPageController controller;
+    musicPlayer shot = new musicPlayer();
 
     private boolean canShoot = true;
     private final long shootDelay = 200;
@@ -36,6 +37,7 @@ public class Bullet {
     }
 
     public void fireBullet() {
+        shot.shotSFX();
         ImageView bullet = new ImageView(new Image(getClass().getResource("img/bullet1.png").toExternalForm()));
         bullet.setFitWidth(10);
         bullet.setFitHeight(20);

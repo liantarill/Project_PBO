@@ -37,9 +37,9 @@ public class StartPageController implements Initializable {
     private ImageView sceneStart;
     @FXML
     private AnchorPane scene;
-
     private Random random = new Random();
     private final List<ImageView> enemies = new ArrayList<>();
+    musicPlayer music = new musicPlayer();
 
     /**
      * Initializes the controller class.
@@ -47,6 +47,7 @@ public class StartPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        music.startMusic();
         startEnemySpawner();
 
     }
@@ -60,7 +61,7 @@ public class StartPageController implements Initializable {
 
         stage.setScene(newScene);
         stage.show();
-
+        music.stopMusic();
         root.requestFocus();
 
     }
@@ -126,6 +127,7 @@ public class StartPageController implements Initializable {
         };
 
         timer.start();
+
     }
 
 }

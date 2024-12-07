@@ -27,6 +27,8 @@ public class Enemy {
     private final MainPageController controller;
     private final Random random = new Random();
 
+    musicPlayer explosive = new musicPlayer();
+
     public Enemy(AnchorPane scene, ImageView Hero, MainPageController controller) {
         this.scene = scene;
         this.Hero = Hero;
@@ -105,6 +107,7 @@ public class Enemy {
         explosion.setLayoutY(y);
 
         scene.getChildren().add(explosion);
+        explosive.explosionSFX();
 
         String[] explosionFrames = {
                 getClass().getResource("img/explosion/explosion1.png").toExternalForm(),
@@ -117,6 +120,7 @@ public class Enemy {
         };
 
         Timeline explosionAnimation = new Timeline();
+
         for (int i = 0; i < explosionFrames.length; i++) {
             final int frameIndex = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(100 * i), event -> {

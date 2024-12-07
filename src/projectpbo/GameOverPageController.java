@@ -29,6 +29,7 @@ public class GameOverPageController implements Initializable {
     private ImageView noBtn;
     @FXML
     private Text scored;
+    musicPlayer music = new musicPlayer();
 
     /**
      * Initializes the controller class.
@@ -36,6 +37,8 @@ public class GameOverPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        music.dead();
+        music.gameOverMusic();
     }
 
     @FXML
@@ -49,6 +52,7 @@ public class GameOverPageController implements Initializable {
         stage.setTitle("Space War");
         stage.setScene(newScene);
         stage.show();
+        music.stopMusic();
 
         root.requestFocus();
     }

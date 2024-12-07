@@ -43,6 +43,7 @@ public class MainPageController implements Initializable {
 
     public static int score = 0;
     public final Random random = new Random();
+    musicPlayer music = new musicPlayer();
 
     Bullet bullet;
     Enemy enemy;
@@ -53,7 +54,7 @@ public class MainPageController implements Initializable {
         bullet = new Bullet(Hero, scene, this);
         enemy = new Enemy(scene, Hero, this);
         hero = new Hero(scene, Hero, this);
-
+        music.inGameMusic();
         score = 0;
         updateScore();
         scene.setOnKeyPressed(this::Movement);
@@ -86,6 +87,7 @@ public class MainPageController implements Initializable {
 
         root.requestFocus();
         enemy.enemies.clear();
+        music.stopMusic();
     }
 
 }
