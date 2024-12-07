@@ -46,6 +46,7 @@ public class GameOverPageController implements Initializable {
 
         Scene newScene = new Scene(root);
 
+        stage.setTitle("Space War");
         stage.setScene(newScene);
         stage.show();
 

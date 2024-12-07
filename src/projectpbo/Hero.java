@@ -19,6 +19,9 @@ public class Hero implements IHero {
     AnchorPane scene;
     ImageView Hero;
 
+    double heroX;
+    double heroY;
+
     MainPageController controller;
 
     public int health = 5;
@@ -29,35 +32,45 @@ public class Hero implements IHero {
         this.controller = controller;
     }
 
-    public ImageView getHero() {
-        return Hero;
+    public double getHeroX() {
+        return Hero.getLayoutX();
     }
 
-    public void setHero(ImageView hero) {
-        Hero = hero;
+    public void setHeroX(double X) {
+        Hero.setLayoutX(X);
+        heroX = Hero.getLayoutX();
+    }
+
+    public double getHeroY() {
+        return Hero.getLayoutY();
+    }
+
+    public void setHeroY(double Y) {
+        Hero.setLayoutY(Y);
+        heroY = Hero.getLayoutY();
     }
 
     @Override
     public void heroMovement(KeyCode code) {
         switch (code) {
             case W:
-                if (Hero.getLayoutY() > 0) {
-                    Hero.setLayoutY(Hero.getLayoutY() - 10);
+                if (getHeroY() > 0) {
+                    setHeroY(getHeroY() - 10);
                 }
                 break;
             case S:
-                if (Hero.getLayoutY() < scene.getHeight() - Hero.getFitHeight()) {
-                    Hero.setLayoutY(Hero.getLayoutY() + 10);
+                if (getHeroY() < scene.getHeight() - Hero.getFitHeight()) {
+                    setHeroY(getHeroY() + 10);
                 }
                 break;
             case D:
-                if (Hero.getLayoutX() < scene.getWidth() - Hero.getFitWidth()) {
-                    Hero.setLayoutX(Hero.getLayoutX() + 10);
+                if (getHeroX() < scene.getWidth() - Hero.getFitWidth()) {
+                    Hero.setLayoutX(getHeroX() + 10);
                 }
                 break;
             case A:
-                if (Hero.getLayoutX() > 0) {
-                    Hero.setLayoutX(Hero.getLayoutX() - 10);
+                if (getHeroX() > 0) {
+                    setHeroX(getHeroX() - 10);
                 }
                 break;
             case SPACE:

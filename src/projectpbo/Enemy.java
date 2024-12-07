@@ -91,6 +91,10 @@ public class Enemy {
             }
         };
         timer.start();
+
+        if (controller.hero.health <= 0) {
+            timer.stop();
+        }
     }
 
     public void createExplosionEffect(double x, double y) {

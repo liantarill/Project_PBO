@@ -55,7 +55,7 @@ public class StartPageController implements Initializable {
     private void startGame(MouseEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
         Stage stage = (Stage) startBtn.getScene().getWindow();
-        stage.close();
+        stage.setTitle("Space War");
         Scene newScene = new Scene(root);
 
         stage.setScene(newScene);

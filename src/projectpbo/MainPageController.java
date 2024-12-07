@@ -54,6 +54,8 @@ public class MainPageController implements Initializable {
         enemy = new Enemy(scene, Hero, this);
         hero = new Hero(scene, Hero, this);
 
+        score = 0;
+        updateScore();
         scene.setOnKeyPressed(this::Movement);
         enemy.startEnemySpawner();
 
@@ -69,11 +71,9 @@ public class MainPageController implements Initializable {
     }
 
     public void gameOver() throws Exception {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gameOverPage.fxml"));
         Parent root = loader.load();
-
-        Stage currentStage = (Stage) scene.getScene().getWindow();
-        currentStage.close();
 
         GameOverPageController controller = loader.getController();
         controller.setScore(score);
@@ -86,7 +86,6 @@ public class MainPageController implements Initializable {
 
         root.requestFocus();
         enemy.enemies.clear();
-
     }
 
 }
