@@ -16,20 +16,18 @@ import javafx.util.Duration;
  * @author LENOVO
  */
 public class Hero implements IHero {
-    AnchorPane scene;
-    ImageView Hero;
-
-    double heroX;
-    double heroY;
-
-    MainPageController controller;
-
-    public int health = 5;
+    private AnchorPane scene;
+    private ImageView Hero;
+    private double heroX;
+    private double heroY;
+    private MainPageController controller;
+    private static int health;
 
     public Hero(AnchorPane scene, ImageView Hero, MainPageController controller) {
         this.scene = scene;
         this.Hero = Hero;
         this.controller = controller;
+        health = 5;
     }
 
     public double getHeroX() {
@@ -50,29 +48,33 @@ public class Hero implements IHero {
         heroY = Hero.getLayoutY();
     }
 
+    public static int getHealt() {
+        return health;
+    }
+
     @Override
     public void heroMovement() {
-        if (controller.pressedKeys.contains(KeyCode.W)) {
+        if (controller.getPressedKeys().contains(KeyCode.W)) {
             if (getHeroY() > 0) {
                 setHeroY(getHeroY() - 10);
             }
         }
-        if (controller.pressedKeys.contains(KeyCode.S)) {
+        if (controller.getPressedKeys().contains(KeyCode.S)) {
             if (getHeroY() < scene.getHeight() - Hero.getFitHeight()) {
                 setHeroY(getHeroY() + 10);
             }
         }
-        if (controller.pressedKeys.contains(KeyCode.D)) {
+        if (controller.getPressedKeys().contains(KeyCode.D)) {
             if (getHeroX() < scene.getWidth() - Hero.getFitWidth()) {
                 Hero.setLayoutX(getHeroX() + 10);
             }
         }
-        if (controller.pressedKeys.contains(KeyCode.A)) {
+        if (controller.getPressedKeys().contains(KeyCode.A)) {
             if (getHeroX() > 0) {
                 setHeroX(getHeroX() - 10);
             }
         }
-        if (controller.pressedKeys.contains(KeyCode.SPACE)) {
+        if (controller.getPressedKeys().contains(KeyCode.SPACE)) {
             controller.bullet.fireBulletWithDelay();
         }
     }

@@ -22,17 +22,21 @@ import javafx.util.Duration;
 public class Enemy {
 
     private final AnchorPane scene;
-    private final ImageView Hero;
-    public final List<ImageView> enemies = new ArrayList<>();
+    private final ImageView myHero;
+    private final List<ImageView> enemies = new ArrayList<>();
     private final MainPageController controller;
     private final Random random = new Random();
 
     musicPlayer explosive = new musicPlayer();
 
-    public Enemy(AnchorPane scene, ImageView Hero, MainPageController controller) {
+    public Enemy(AnchorPane scene, ImageView myHero, MainPageController controller) {
         this.scene = scene;
-        this.Hero = Hero;
+        this.myHero = myHero;
         this.controller = controller;
+    }
+
+    public List<ImageView> getEnemies() {
+        return enemies;
     }
 
     public void startEnemySpawner() {
@@ -73,28 +77,26 @@ public class Enemy {
             public void handle(long now) {
                 enemy.setLayoutY(enemy.getLayoutY() + speed);
 
-                if (enemies.contains(enemy) && enemy.getBoundsInParent().intersects(Hero.getBoundsInParent())) {
+                if (enemies.contains(enemy) && enemy.getBoundsInParent().intersects(myHero.getBoundsInParent())) {
                     enemies.remove(enemy);
                     controller.hero.triggerHeroBeepEffect();
                     controller.hero.handleHeroDamage();
-                    MainPageController.score -= 10;
+                    MainPageController.setScore(MainPageController.getScore() - 10);
                     controller.updateScore();
-                    // stop();
                     return;
                 }
 
                 if (enemies.contains(enemy) && enemy.getLayoutY() > scene.getHeight()) {
                     scene.getChildren().remove(enemy);
                     enemies.remove(enemy);
-                    MainPageController.score -= 10;
+                    MainPageController.setScore(MainPageController.getScore() - 10);
                     controller.updateScore();
                     stop();
                 }
             }
         };
         timer.start();
-
-        if (controller.hero.health <= 0) {
+        if (Hero.getHealt() <= 0) {
             timer.stop();
         }
     }

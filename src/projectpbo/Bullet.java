@@ -24,11 +24,10 @@ public class Bullet {
     private final List<ImageView> bullets = new ArrayList<>();
     private final ImageView Hero;
     private final AnchorPane scene;
-    private final MainPageController controller;
-    musicPlayer shot = new musicPlayer();
-
-    private boolean canShoot = true;
     private final long shootDelay = 200;
+    private final MainPageController controller;
+    private boolean canShoot = true;
+    musicPlayer shot = new musicPlayer();
 
     public Bullet(ImageView Hero, AnchorPane scene, MainPageController controller) {
         this.Hero = Hero;
@@ -86,7 +85,7 @@ public class Bullet {
         while (bulletIterator.hasNext()) {
             ImageView bullet = bulletIterator.next();
 
-            Iterator<ImageView> enemyIterator = controller.enemy.enemies.iterator();
+            Iterator<ImageView> enemyIterator = controller.enemy.getEnemies().iterator();
             while (enemyIterator.hasNext()) {
                 ImageView enemy = enemyIterator.next();
 
@@ -99,7 +98,7 @@ public class Bullet {
                     bulletIterator.remove();
                     enemyIterator.remove();
 
-                    MainPageController.score += 10;
+                    MainPageController.setScore(MainPageController.getScore() + 10);
                     controller.updateScore();
                     return;
                 }

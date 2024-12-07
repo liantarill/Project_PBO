@@ -44,14 +44,27 @@ public class MainPageController implements Initializable {
     public ImageView health5;
     @FXML
     private Text point;
-    public Set<KeyCode> pressedKeys = new HashSet<>();
-    public static int score = 0;
+    private Set<KeyCode> pressedKeys = new HashSet<>();
+    private static int score = 0;
+
     public final Random random = new Random();
     musicPlayer music = new musicPlayer();
 
     Bullet bullet;
     Enemy enemy;
     Hero hero;
+
+    public Set<KeyCode> getPressedKeys() {
+        return pressedKeys;
+    }
+
+    public static int getScore() {
+        return score;
+    }
+
+    public static void setScore(int score) {
+        MainPageController.score = score;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,7 +112,7 @@ public class MainPageController implements Initializable {
         stage.show();
 
         root.requestFocus();
-        enemy.enemies.clear();
+        enemy.getEnemies().clear();
         music.stopMusic();
     }
 
