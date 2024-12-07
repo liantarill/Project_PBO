@@ -4,14 +4,12 @@
  */
 package projectpbo;
 
-import javafx.scene.input.KeyCode;
-
 /**
  *
  * @author LENOVO
  */
 public interface IHero {
-    public void heroMovement(KeyCode code);
+    public void heroMovement();
 
     public void updateHealthUI();
 

@@ -5,14 +5,18 @@
 package projectpbo;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -40,7 +44,7 @@ public class MainPageController implements Initializable {
     public ImageView health5;
     @FXML
     private Text point;
-
+    public Set<KeyCode> pressedKeys = new HashSet<>();
     public static int score = 0;
     public final Random random = new Random();
     musicPlayer music = new musicPlayer();
@@ -57,14 +61,23 @@ public class MainPageController implements Initializable {
         music.inGameMusic();
         score = 0;
         updateScore();
+
         scene.setOnKeyPressed(this::Movement);
+        scene.setOnKeyReleased(this::movementHandle);
         enemy.startEnemySpawner();
 
     }
 
     @FXML
     public void Movement(KeyEvent event) {
-        hero.heroMovement(event.getCode());
+        pressedKeys.add(event.getCode());
+        hero.heroMovement();
+    }
+
+    @FXML
+    private void movementHandle(KeyEvent event) {
+        pressedKeys.remove(event.getCode());
+        hero.heroMovement();
     }
 
     public void updateScore() {

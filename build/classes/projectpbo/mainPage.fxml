@@ -16,7 +16,7 @@
                   <Image url="@img/bg.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="Hero" fitHeight="51.0" fitWidth="49.0" layoutX="378.0" layoutY="535.0" onKeyPressed="#Movement" onKeyReleased="#movementHandle" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Hero" fitHeight="51.0" fitWidth="49.0" layoutX="378.0" layoutY="535.0" onKeyPressed="#Movement" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/ship.png" />
                </image>
@@ -56,7 +56,7 @@
                   <Font name="Agency FB Bold" size="20.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="675.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" style="\\: \\;" text="SCORE:" wrappingWidth="50.7998046875">
+            <Text fx:id="point1" fill="WHITE" layoutX="675.0" layoutY="556.0" onKeyPressed="#shot" strokeType="OUTSIDE" strokeWidth="0.0" style="\\: \\;" text="SCORE:" wrappingWidth="50.7998046875">
                <font>
                   <Font name="Agency FB Bold" size="20.0" />
                </font>

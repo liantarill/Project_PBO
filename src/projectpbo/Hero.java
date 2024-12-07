@@ -51,31 +51,29 @@ public class Hero implements IHero {
     }
 
     @Override
-    public void heroMovement(KeyCode code) {
-        switch (code) {
-            case W:
-                if (getHeroY() > 0) {
-                    setHeroY(getHeroY() - 10);
-                }
-                break;
-            case S:
-                if (getHeroY() < scene.getHeight() - Hero.getFitHeight()) {
-                    setHeroY(getHeroY() + 10);
-                }
-                break;
-            case D:
-                if (getHeroX() < scene.getWidth() - Hero.getFitWidth()) {
-                    Hero.setLayoutX(getHeroX() + 10);
-                }
-                break;
-            case A:
-                if (getHeroX() > 0) {
-                    setHeroX(getHeroX() - 10);
-                }
-                break;
-            case SPACE:
-                controller.bullet.fireBulletWithDelay();
-                break;
+    public void heroMovement() {
+        if (controller.pressedKeys.contains(KeyCode.W)) {
+            if (getHeroY() > 0) {
+                setHeroY(getHeroY() - 10);
+            }
+        }
+        if (controller.pressedKeys.contains(KeyCode.S)) {
+            if (getHeroY() < scene.getHeight() - Hero.getFitHeight()) {
+                setHeroY(getHeroY() + 10);
+            }
+        }
+        if (controller.pressedKeys.contains(KeyCode.D)) {
+            if (getHeroX() < scene.getWidth() - Hero.getFitWidth()) {
+                Hero.setLayoutX(getHeroX() + 10);
+            }
+        }
+        if (controller.pressedKeys.contains(KeyCode.A)) {
+            if (getHeroX() > 0) {
+                setHeroX(getHeroX() - 10);
+            }
+        }
+        if (controller.pressedKeys.contains(KeyCode.SPACE)) {
+            controller.bullet.fireBulletWithDelay();
         }
     }
 
