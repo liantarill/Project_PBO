@@ -98,7 +98,7 @@ public class Bullet {
                     bulletIterator.remove();
                     enemyIterator.remove();
 
-                    controller.score += 10;
+                    FXMLDocumentController.score += 10;
                     controller.updateScore();
                     return;
                 }

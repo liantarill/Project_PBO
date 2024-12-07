@@ -49,7 +49,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Text point;
 
-    public int score = 0;
+    public static int score = 0;
     public final Random random = new Random();
 
     Bullet bullet;
@@ -68,31 +68,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     public void Movement(KeyEvent event) {
-        switch (event.getCode()) {
-            case W:
-                if (Hero.getLayoutY() > 0) {
-                    Hero.setLayoutY(Hero.getLayoutY() - 10);
-                }
-                break;
-            case S:
-                if (Hero.getLayoutY() < scene.getHeight() - Hero.getFitHeight()) {
-                    Hero.setLayoutY(Hero.getLayoutY() + 10);
-                }
-                break;
-            case D:
-                if (Hero.getLayoutX() < scene.getWidth() - Hero.getFitWidth()) {
-                    Hero.setLayoutX(Hero.getLayoutX() + 10);
-                }
-                break;
-            case A:
-                if (Hero.getLayoutX() > 0) {
-                    Hero.setLayoutX(Hero.getLayoutX() - 10);
-                }
-                break;
-            case SPACE:
-                bullet.fireBulletWithDelay();
-                break;
-        }
+        hero.heroMovement(event.getCode());
     }
 
     public void updateScore() {
@@ -102,6 +78,9 @@ public class FXMLDocumentController implements Initializable {
     public void gameOver() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gameOverPage.fxml"));
         Parent root = loader.load();
+
+        Stage currentStage = (Stage) scene.getScene().getWindow();
+        currentStage.close();
 
         GameOverPageController controller = loader.getController();
         controller.setScore(score);
@@ -114,6 +93,7 @@ public class FXMLDocumentController implements Initializable {
 
         root.requestFocus();
         enemy.enemies.clear();
+
     }
 
 }

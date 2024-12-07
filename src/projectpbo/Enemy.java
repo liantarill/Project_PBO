@@ -75,7 +75,7 @@ public class Enemy {
                     enemies.remove(enemy);
                     controller.hero.triggerHeroBeepEffect();
                     controller.hero.handleHeroDamage();
-                    controller.score -= 10;
+                    FXMLDocumentController.score -= 10;
                     controller.updateScore();
                     // stop();
                     return;
@@ -84,7 +84,7 @@ public class Enemy {
                 if (enemies.contains(enemy) && enemy.getLayoutY() > scene.getHeight()) {
                     scene.getChildren().remove(enemy);
                     enemies.remove(enemy);
-                    controller.score -= 10;
+                    FXMLDocumentController.score -= 10;
                     controller.updateScore();
                     stop();
                 }

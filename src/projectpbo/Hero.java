@@ -6,7 +6,11 @@ package projectpbo;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.input.KeyCode;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -14,9 +18,10 @@ import javafx.util.Duration;
  *
  * @author LENOVO
  */
-public class Hero {
+public class Hero implements IHero {
     AnchorPane scene;
     ImageView Hero;
+
     FXMLDocumentController controller;
 
     public int health = 5;
@@ -27,14 +32,44 @@ public class Hero {
         this.controller = controller;
     }
 
-    public void triggerHeroBeepEffect() {
-        Timeline flash = new Timeline(
-                new KeyFrame(Duration.millis(100), event -> Hero.setOpacity(0)),
-                new KeyFrame(Duration.millis(200), event -> Hero.setOpacity(1.0)));
-        flash.setCycleCount(7);
-        flash.play();
+    public ImageView getHero() {
+        return Hero;
     }
 
+    public void setHero(ImageView hero) {
+        Hero = hero;
+    }
+
+    @Override
+    public void heroMovement(KeyCode code) {
+        switch (code) {
+            case W:
+                if (Hero.getLayoutY() > 0) {
+                    Hero.setLayoutY(Hero.getLayoutY() - 10);
+                }
+                break;
+            case S:
+                if (Hero.getLayoutY() < scene.getHeight() - Hero.getFitHeight()) {
+                    Hero.setLayoutY(Hero.getLayoutY() + 10);
+                }
+                break;
+            case D:
+                if (Hero.getLayoutX() < scene.getWidth() - Hero.getFitWidth()) {
+                    Hero.setLayoutX(Hero.getLayoutX() + 10);
+                }
+                break;
+            case A:
+                if (Hero.getLayoutX() > 0) {
+                    Hero.setLayoutX(Hero.getLayoutX() - 10);
+                }
+                break;
+            case SPACE:
+                controller.bullet.fireBulletWithDelay();
+                break;
+        }
+    }
+
+    @Override
     public void updateHealthUI() {
         ImageView[] healthBars = {
                 controller.health1,
@@ -47,6 +82,7 @@ public class Hero {
         }
     }
 
+    @Override
     public void handleHeroDamage() {
         health--;
         updateHealthUI();
@@ -58,5 +94,13 @@ public class Hero {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void triggerHeroBeepEffect() {
+        Timeline flash = new Timeline(
+                new KeyFrame(Duration.millis(100), event -> Hero.setOpacity(0)),
+                new KeyFrame(Duration.millis(200), event -> Hero.setOpacity(1.0)));
+        flash.setCycleCount(7);
+        flash.play();
     }
 }
