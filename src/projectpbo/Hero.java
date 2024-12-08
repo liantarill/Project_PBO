@@ -21,7 +21,7 @@ public class Hero implements IHero {
     private double heroX;
     private double heroY;
     private MainPageController controller;
-    private static int health;
+    private int health;
 
     public Hero(AnchorPane scene, ImageView Hero, MainPageController controller) {
         this.scene = scene;
@@ -48,7 +48,7 @@ public class Hero implements IHero {
         heroY = Hero.getLayoutY();
     }
 
-    public static int getHealt() {
+    public int getHealt() {
         return health;
     }
 

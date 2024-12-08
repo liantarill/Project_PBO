@@ -24,8 +24,10 @@ public class Enemy {
     private final AnchorPane scene;
     private final ImageView myHero;
     private final List<ImageView> enemies = new ArrayList<>();
-    private final MainPageController controller;
+    private final List<AnimationTimer> activeTimers = new ArrayList<>();
+    private final Timeline spawner;
     private final Random random = new Random();
+    private MainPageController controller;
 
     musicPlayer explosive = new musicPlayer();
 
@@ -33,6 +35,9 @@ public class Enemy {
         this.scene = scene;
         this.myHero = myHero;
         this.controller = controller;
+
+        spawner = new Timeline(new KeyFrame(Duration.seconds(1), event -> spawnEnemy()));
+        spawner.setCycleCount(Timeline.INDEFINITE);
     }
 
     public List<ImageView> getEnemies() {
@@ -40,8 +45,6 @@ public class Enemy {
     }
 
     public void startEnemySpawner() {
-        Timeline spawner = new Timeline(new KeyFrame(Duration.seconds(1), event -> spawnEnemy()));
-        spawner.setCycleCount(Timeline.INDEFINITE);
         spawner.play();
     }
 
@@ -83,6 +86,12 @@ public class Enemy {
                     controller.hero.handleHeroDamage();
                     MainPageController.setScore(MainPageController.getScore() - 10);
                     controller.updateScore();
+                    // stop();
+                    if (enemy.getLayoutY() > scene.getHeight()) {
+                        scene.getChildren().remove(enemy);
+                        enemies.remove(enemy);
+                        stop();
+                    }
                     return;
                 }
 
@@ -95,8 +104,11 @@ public class Enemy {
                 }
             }
         };
+
         timer.start();
-        if (Hero.getHealt() <= 0) {
+        activeTimers.add(timer); // Add the timer to the list of active timers
+
+        if (controller.hero.getHealt() <= 0) {
             timer.stop();
         }
     }
@@ -134,5 +146,14 @@ public class Enemy {
         explosionAnimation.setOnFinished(event -> scene.getChildren().remove(explosion));
 
         explosionAnimation.play();
+    }
+
+    public void stopAllTimers() {
+        spawner.stop();
+
+        for (AnimationTimer timer : activeTimers) {
+            timer.stop();
+        }
+        activeTimers.clear();
     }
 }

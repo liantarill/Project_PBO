@@ -25,7 +25,7 @@ public class Bullet {
     private final ImageView Hero;
     private final AnchorPane scene;
     private final long shootDelay = 200;
-    private final MainPageController controller;
+    private MainPageController controller;
     private boolean canShoot = true;
     musicPlayer shot = new musicPlayer();
 
@@ -77,6 +77,10 @@ public class Bullet {
             }
         };
         timer.start();
+
+        if (controller.hero.getHealt() <= 0) {
+            timer.stop();
+        }
     }
 
     public void checkBulletCollision() {

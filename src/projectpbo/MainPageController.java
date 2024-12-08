@@ -108,6 +108,8 @@ public class MainPageController implements Initializable {
         Stage stage = (Stage) scene.getScene().getWindow();
         Scene newScene = new Scene(root);
 
+        enemy.stopAllTimers(); // untuk stop smua animasi
+
         stage.setScene(newScene);
         stage.show();
 
