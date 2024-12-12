@@ -78,7 +78,7 @@ public class Bullet {
         };
         timer.start();
 
-        if (controller.hero.getHealt() <= 0) {
+        if (controller.hero.getHealth() <= 0) {
             timer.stop();
         }
     }

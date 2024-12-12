@@ -85,6 +85,11 @@ public class MainPageController implements Initializable {
     public void Movement(KeyEvent event) {
         pressedKeys.add(event.getCode());
         hero.heroMovement();
+        if (Hero == null) {
+            System.out.println("Hero is null");
+        } else {
+            hero.heroMovement();
+        }
     }
 
     @FXML

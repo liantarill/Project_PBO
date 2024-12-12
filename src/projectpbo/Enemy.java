@@ -19,10 +19,10 @@ import javafx.util.Duration;
  *
  * @author LENOVO
  */
-public class Enemy {
+public class Enemy extends Character {
 
-    private final AnchorPane scene;
-    private final ImageView myHero;
+    private AnchorPane scene;
+    private ImageView myHero;
     private final List<ImageView> enemies = new ArrayList<>();
     private final List<AnimationTimer> activeTimers = new ArrayList<>();
     private final Timeline spawner;
@@ -32,9 +32,7 @@ public class Enemy {
     musicPlayer explosive = new musicPlayer();
 
     public Enemy(AnchorPane scene, ImageView myHero, MainPageController controller) {
-        this.scene = scene;
-        this.myHero = myHero;
-        this.controller = controller;
+        super(scene, myHero, controller);
 
         spawner = new Timeline(new KeyFrame(Duration.seconds(1), event -> spawnEnemy()));
         spawner.setCycleCount(Timeline.INDEFINITE);
@@ -59,7 +57,7 @@ public class Enemy {
         };
 
         int index = random.nextInt(enemyImages.length);
-        double x = random.nextDouble() * (scene.getWidth() - 50);
+        double x = random.nextDouble() * (getScene().getWidth() - 50);
 
         ImageView enemy = new ImageView(new Image(enemyImages[index]));
         enemy.setFitWidth(50);
@@ -67,7 +65,7 @@ public class Enemy {
         enemy.setLayoutX(x);
         enemy.setLayoutY(-50);
 
-        scene.getChildren().add(enemy);
+        getScene().getChildren().add(enemy);
         enemies.add(enemy);
         createEnemyMovement(enemy);
     }
@@ -80,26 +78,27 @@ public class Enemy {
             public void handle(long now) {
                 enemy.setLayoutY(enemy.getLayoutY() + speed);
 
-                if (enemies.contains(enemy) && enemy.getBoundsInParent().intersects(myHero.getBoundsInParent())) {
+                if (enemies.contains(enemy)
+                        && enemy.getBoundsInParent().intersects(getCharacterImage().getBoundsInParent())) {
                     enemies.remove(enemy);
-                    controller.hero.triggerHeroBeepEffect();
-                    controller.hero.handleHeroDamage();
+                    getController().hero.triggerHeroBeepEffect();
+                    getController().hero.handleHeroDamage();
                     MainPageController.setScore(MainPageController.getScore() - 10);
-                    controller.updateScore();
-                    // stop();
-                    if (enemy.getLayoutY() > scene.getHeight()) {
-                        scene.getChildren().remove(enemy);
+                    getController().updateScore();
+
+                    if (enemy.getLayoutY() > getScene().getHeight()) {
+                        getScene().getChildren().remove(enemy);
                         enemies.remove(enemy);
                         stop();
                     }
                     return;
                 }
 
-                if (enemies.contains(enemy) && enemy.getLayoutY() > scene.getHeight()) {
-                    scene.getChildren().remove(enemy);
+                if (enemies.contains(enemy) && enemy.getLayoutY() > getScene().getHeight()) {
+                    getScene().getChildren().remove(enemy);
                     enemies.remove(enemy);
                     MainPageController.setScore(MainPageController.getScore() - 10);
-                    controller.updateScore();
+                    getController().updateScore();
                     stop();
                 }
             }
@@ -108,7 +107,7 @@ public class Enemy {
         timer.start();
         activeTimers.add(timer); // Add the timer to the list of active timers
 
-        if (controller.hero.getHealt() <= 0) {
+        if (getController().hero.getHealth() <= 0) {
             timer.stop();
         }
     }
@@ -120,7 +119,7 @@ public class Enemy {
         explosion.setLayoutX(x);
         explosion.setLayoutY(y);
 
-        scene.getChildren().add(explosion);
+        getScene().getChildren().add(explosion);
         explosive.explosionSFX();
 
         String[] explosionFrames = {
@@ -143,7 +142,7 @@ public class Enemy {
             explosionAnimation.getKeyFrames().add(keyFrame);
         }
 
-        explosionAnimation.setOnFinished(event -> scene.getChildren().remove(explosion));
+        explosionAnimation.setOnFinished(event -> getScene().getChildren().remove(explosion));
 
         explosionAnimation.play();
     }
