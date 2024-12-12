@@ -11,15 +11,6 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author LENOVO
  */
-
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-
-/**
- * Character is a base class that provides common attributes and methods for
- * all game characters, such as position, health, and associated scene.
- */
-// Kelas Character
 public class Character {
     protected AnchorPane scene;
 
